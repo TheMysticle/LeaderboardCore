@@ -20,9 +20,14 @@ namespace LeaderboardCore.HarmonyPatches
 			Plugin.Instance.scoreSaber.Assembly.GetType("ScoreSaber.Features.Leaderboards.UI.PanelView")
 				.GetMethod("set_isLoaded", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
 
-		private static void Postfix(bool ____isLoaded)
+		// Harmony's field-injection convention is exactly 3 marker underscores + the field's own
+		// exact name. The backing field is "__isLoaded" (two underscores, declared on our own
+		// BasicPanelViewController), so the parameter needs 3+2 = 5 leading underscores here, not 4
+		// -- confirmed via the real error text on real hardware ("No such field defined... Parameter
+		// name: _isLoaded", meaning Harmony was stripping to a single leftover underscore before).
+		private static void Postfix(bool _____isLoaded)
         {
-			IsLoadedChanged?.Invoke(____isLoaded);
+			IsLoadedChanged?.Invoke(_____isLoaded);
         }
 	}
 }
