@@ -23,14 +23,22 @@ namespace LeaderboardCore.Models
 
             if (ssLeaderboardElementsTransform == null)
             {
-                ssLeaderboardElementsTransform = platformLeaderboardViewController.transform.Find("ScoreSaberLeaderboardElements");
-                ssLeaderboardElementsPosition = ssLeaderboardElementsTransform.localPosition;
+                var found = platformLeaderboardViewController.transform.Find("ScoreSaberLeaderboardElements");
+                if (found != null)
+                {
+                    ssLeaderboardElementsTransform = found;
+                    ssLeaderboardElementsPosition = found.localPosition;
+                }
             }
 
             if (ssPanelScreenTransform == null)
             {
-                ssPanelScreenTransform = platformLeaderboardViewController.transform.Find("ScoreSaberPanelScreen");
-                ssPanelScreenPosition = ssPanelScreenTransform.localPosition;
+                var found = platformLeaderboardViewController.transform.Find("ScoreSaberPanelScreen");
+                if (found != null)
+                {
+                    ssPanelScreenTransform = found;
+                    ssPanelScreenPosition = found.localPosition;
+                }
             }
         }
 
